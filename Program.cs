@@ -4,7 +4,6 @@ class Program
 {
     static void Main(string[] args)
     {
-<<<<<<< HEAD
         int numero1,numero2;
         int risultato = 0,resto = 0;
         string operazione;
