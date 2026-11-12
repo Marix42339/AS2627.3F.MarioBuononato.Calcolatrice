@@ -5,18 +5,44 @@ class Program
     static void Main(string[] args)
     {
         int numero1,numero2;
-        int risultato = 0, resto = 0;
+        double risultato = 0;
+        int resto = 0;
         string operazione;
         bool operazioneCorretta = true;
-        Console.WriteLine("inserisci l'operazione tra: \n< Addizione: + >\n < Sottrazione: - >\n < Moltiplicazione: * >\n < Divisione: / >\n < Potenza: ^ >\n < valore assoluto: | >\n ");
+        Console.WriteLine("inserisci l'operazione tra: \n< Addizione: + >\n < Sottrazione: - >\n < Moltiplicazione: * >\n < Divisione: / >\n < Potenza: ^ >\n < valore assoluto: | >\n < fattoriale: ! >");
         operazione = Console.ReadLine();
-        if(operazione == "|")
-        {
+        if(operazione == "|" || operazione == "!")
+        { 
             Console.WriteLine("inserisci un numero: ");
             numero1 = Convert.ToInt32(Console.ReadLine());
-            if(numero1<0) risultato = numero1 * (-1);
-            else Console.WriteLine($"Il numero {numero1} è già positivo");
-            Console.WriteLine($"il numero assoluto di {numero1} è: {risultato}");
+            if(operazione == "|")
+            {
+                if(numero1<0) 
+                {
+                risultato = -(numero1);  
+                }
+                else 
+                {
+                Console.WriteLine($"Il numero {numero1} è già positivo");
+                risultato = numero1;
+                }
+            }
+            else
+            {
+                if(numero1<0)
+                {
+                    Console.WriteLine("Il fattoriale non è definito per numeri negativi.");
+                    operazioneCorretta = false;
+                }
+                else
+                {
+                risultato = 1;
+                for(int i=1; i<=numero1; i++)
+                {
+                    risultato *= i;
+                }
+                }
+            }
         }
         else
         {
@@ -47,7 +73,30 @@ class Program
                     }
                     break;
                 case "^":
-                    risultato = Math.Pow(numero1, numero2);
+                    risultato = 1;
+                    if(numero2 >= 0)
+                    {
+                        for(int i=1; i<=numero2; i++)
+                        {   
+                        risultato *= numero1;
+                        }
+                    }
+                    else
+                    {
+                        if (numero1 == 0 )
+                        {
+                        Console.WriteLine("Errore: non è possibile elevare 0 a una potenza negativa.");
+                        operazioneCorretta = false;
+                        }
+                        else
+                        {
+                        for (int i = -1; i >= numero2; i--)
+                        {
+                            risultato *= numero1;
+                        }
+                        risultato = 1.0 / risultato;
+                        }
+                    }
                     break;
                 default:
                     Console.WriteLine("Il carattere che hai inserito non è un'operazione");
@@ -59,11 +108,11 @@ class Program
         {
             if(operazione == "/")
             {
-                Console.WriteLine($"Il risultato è: {risultato} il resto è: {resto}");
+                Console.WriteLine($"Il risultato è: {risultato:0.###} il resto è: {resto}");
             }
             else
             {
-                Console.WriteLine($"Il risultato è uguale a: {risultato}");
+                Console.WriteLine($"Il risultato è uguale a: {risultato:0.###}");
             }
         }
     }
